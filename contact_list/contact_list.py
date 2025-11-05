@@ -4,7 +4,7 @@ __author__ = "ACE Faculty"
 __version__ = "1.0.0"
 __credits__ = ""
 
-from PySide6.QtWidgets import  QMainWindow, QLineEdit, QPushButton
+from PySide6.QtWidgets import  QMainWindow, QLineEdit, QPushButton, QMessageBox
 from PySide6.QtWidgets import QTableWidget, QLabel, QVBoxLayout, QWidget, QTableWidgetItem
 from PySide6.QtCore import Slot
 
@@ -52,7 +52,8 @@ class ContactList(QMainWindow):
         self.setCentralWidget(container)
         
         self.add_button.clicked.connect(self.__on_add_contact)
-        
+        self.remove_button.clicked.connect(self.__on_remove_contact)
+
     @Slot()
     def __on_add_contact(self):
         """ Private method to handle adding a contact """
@@ -71,3 +72,23 @@ class ContactList(QMainWindow):
             self.status_label.setText(f"Added contact: {name}")
         else:
             self.status_label.setText("Please enter a contact name and phone number.")
+
+    
+    @Slot()
+    def __on_remove_contact(self):
+        """ Private method to handle removing a contact """
+        row = self.contact_table.currentRow()
+
+        if row >= 0:
+            reply = QMessageBox.question(self, 'Confirm Removal',
+                                         f"Are you sure you want to remove the contact: {self.contact_table.item(row, 0).text()}?",
+                                         QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+
+            if reply == QMessageBox.Yes:
+              
+                self.contact_table.removeRow(row)
+
+                self.status_label.setText("Contact removed.")
+       
+        else:        
+            self.status_label.setText("Please select a row to be removed.")
