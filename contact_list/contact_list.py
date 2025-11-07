@@ -56,7 +56,9 @@ class ContactList(QMainWindow):
 
     @Slot()
     def __on_add_contact(self):
-        """ Private method to handle adding a contact """
+        """ 
+        Method to handle adding a contact 
+        """
 
         name = self.contact_name_input.text().strip()
         phone = self.phone_input.text().strip()
@@ -76,12 +78,15 @@ class ContactList(QMainWindow):
     
     @Slot()
     def __on_remove_contact(self):
-        """ Private method to handle removing a contact """
+        """ 
+        Method to handle removing a contact 
+        """
         row = self.contact_table.currentRow()
 
         if row >= 0:
             reply = QMessageBox.question(self, 'Confirm Removal',
-                                         f"Are you sure you want to remove the contact: {self.contact_table.item(row, 0).text()}?",
+                                         f"Are you sure you want to remove the contact:\
+                                           {self.contact_table.item(row, 0).text()}?",
                                          QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
 
             if reply == QMessageBox.Yes:
